@@ -1,0 +1,73 @@
+name: manually-package
+
+on: workflow_dispatch
+  
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: 'true'
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
+
+      - name: Install dependencies
+        run: pip3 install -e .[dev]
+
+      - name: Infer the version from the main module
+        id: inferVersion
+        run: |
+          VERSION=$(python -c 'import bodygamepad; print(bodygamepad.__version__)')
+          echo "::set-output name=version::$VERSION"
+
+      - name: Package the release
+        run: |
+          pyinstaller bodygamepad/main.py --name body-gamepad --add-data "bodygamepad:."
+          cd dist
+          zip -r body-gamepad.${{ steps.inferVersion.outputs.version }}.linux-x64.zip body-gamepad
+
+      - name: Upload the package
+        uses: actions/upload-artifact@v3
+        with:
+          name: body-gamepad.${{ steps.inferVersion.outputs.version }}.linux-x64.zip
+          path: dist/body-gamepad.${{ steps.inferVersion.outputs.version }}.linux-x64.zip
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: 'true'
+
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+        architecture: 'x64'
+
+    - name: Install dependencies
+      run: pip3 install -e .[dev]
+
+    - name: Infer the version from the main module
+      id: inferVersion
+      run: |
+        $version = $(python -c 'import bodygamepad; print(bodygamepad.__version__)').Trim()
+        Write-Output "::set-output name=version::$version"
+
+    - name: Package the release
+      run: |
+        pyinstaller.exe .\bodygamepad\main.py --name body-gamepad --add-data "bodygamepad;."
+        cd dist
+        Compress-Archive -Path body-gamepad body-gamepad.${{ steps.inferVersion.outputs.version }}.win-x64.zip
+
+    - name: Upload the package
+      uses: actions/upload-artifact@v3
+      with:
+        name: body-gamepad.${{ steps.inferVersion.outputs.version }}.win-x64.zip
+        path: dist/body-gamepad.${{ steps.inferVersion.outputs.version }}.win-x64.zip
