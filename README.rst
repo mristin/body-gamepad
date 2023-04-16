@@ -18,6 +18,11 @@ Or Gameboy-emulated Super Mario:
 .. image:: https://media.githubusercontent.com/media/mristin/body-gamepad/main/super-mario.gif
     :alt: Super Mario on Gameboy
 
+Or practice bass guitar while you play Tetris:
+
+.. image:: https://media.githubusercontent.com/media/mristin/body-gamepad/main/tetris.gif
+    :alt: Tetris
+
 
 Installation
 ============
