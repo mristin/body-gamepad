@@ -1,0 +1,3 @@
+Module: https://tfhub.dev/google/movenet/multipose/lightning/1
+Download Time: 2023-04-15 13:01:22.897046
+Downloader Hostname: clt-mob-t-5051 (PID:6644)
