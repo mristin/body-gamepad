@@ -23,6 +23,10 @@ Or practice bass guitar while you play Tetris:
 .. image:: https://media.githubusercontent.com/media/mristin/body-gamepad/main/tetris.gif
     :alt: Tetris
 
+Or practice dribbling in basketball while skiing-or-dying:
+
+.. image:: https://media.githubusercontent.com/media/mristin/body-gamepad/main/ski-or-die.gif
+    :alt: Ski-or-die
 
 Installation
 ============
